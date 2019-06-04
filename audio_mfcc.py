@@ -23,8 +23,10 @@ def main(args):
     if not os.path.exists(urbansound_other_graph_mfcc_folder):
         os.mkdir(urbansound_other_graph_mfcc_folder)
 
+    '''
     for file in os.listdir(urbansound_dogbark_graph_folder):
         filename, extension = os.path.splitext(file)
+        
         if extension == '.wav':
             # open sound file
             audiopath = urbansound_dogbark_graph_folder + os.sep + file
@@ -47,7 +49,8 @@ def main(args):
 
             plt.savefig(urbansound_dogbark_graph_mfcc_folder + '/' + filename + '.png')
             plt.close(fig)
-
+    '''
+    '''
     for file in os.listdir(urbansound_other_graph_folder):
         filename, extension = os.path.splitext(file)
         if extension == '.wav':
@@ -72,8 +75,37 @@ def main(args):
 
             plt.savefig(urbansound_other_graph_mfcc_folder + '/' + filename + '.png')
             plt.close(fig)
+    '''
 
+    index = 0
 
+    for file in os.listdir(urbansound_other_graph_folder):
+        filename, extension = os.path.splitext(file)
+        index += 1
+
+        if extension == '.wav' and index % 200 == 0:
+        #if extension == '.wav':
+            # open sound file
+            audiopath = urbansound_other_graph_folder + os.sep + file
+            print(audiopath)
+
+            y, sr = librosa.load(audiopath)
+            S = librosa.feature.melspectrogram(y, sr=sr, n_mels=128)
+
+            log_S = librosa.amplitude_to_db(S, ref=np.max)
+            fig = plt.figure(figsize=(12, 4))
+            librosa.display.specshow(log_S, sr=sr, x_axis='time', y_axis='mel')
+
+            plt.title('mel power spectrogram')
+            # plt.colorbar(format = '%+02.0f db')
+            plt.tight_layout()
+
+            plt.axis('off')
+            plt.xticks([]), plt.yticks([])
+            plt.subplots_adjust(left=0, bottom=0, right=1, top=1, hspace=0, wspace=0)
+
+            plt.savefig(urbansound_other_graph_mfcc_folder + '/' + filename + '.png')
+            plt.close(fig)
 
 
 if __name__ == "__main__":

@@ -32,8 +32,10 @@ def main(args):
     ESC50_AUDIO_START_POS = 500
     POSITIVE_SAMPLE_DB_TH = -40.0
 
+
     print('creating positive training set ..')
     idx = 0
+
     for file in os.listdir(urbansound_dogbark_data_folder):
         filename, extension = os.path.splitext(file)
         if extension == '.wav' or extension == '.ogg' or extension == '.mp3' or extension == '.flac' or extension == '.aif' or extension == '.aiff':
@@ -72,6 +74,8 @@ def main(args):
                 # break
             csv.close()
 
+
+'''
     print ('creating negative training set ..')
     idx = 0
     for other_data_folder in urbansound_other_data_folders:
@@ -91,7 +95,7 @@ def main(args):
                             audio[i * SEGMENT_MS: (i + 1) * SEGMENT_MS].export(outfile, format='wav')
                 except:
                     print('failed to load this one ^^^^^')
-
+'''
 
 if __name__ == "__main__":
     import argparse
